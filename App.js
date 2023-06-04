@@ -1,20 +1,69 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+// import Ionicons from '@expo/vector-icons/Ionicons';
+// import { AntDesign } from '@expo/vector-icons';
 
-export default function App() {
+
+//import CustomDrawer from './component/file/customdrawer';
+import Home from './component/file/home';
+import About from './component/file/about';
+import Job from './component/file/job';
+import CustomDrawer from './component/file/customdrawer';
+
+const Drawer = createDrawerNavigator();
+
+function NavigationDrawer() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+    <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
+
+      <Drawer.Screen name="JobHunter" component={Home}
+        options={{
+          title: 'JobHunter',
+          drawerIcon: ({ size }) => ( 
+            <Ionicons
+              name="md-home-outline"
+              size={size}
+              color='#4284f5'
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen name="About" component={About}
+        options={{
+          title: 'About',
+          drawerIcon: ({ size }) => (
+            <AntDesign
+              name="questioncircleo"
+              size={size}
+              color="#4284f5" />
+          ),
+        }}
+      />
+      <Drawer.Screen name="Job" component={Job}
+        options={{
+          title: 'Job',
+          drawerIcon: ({ size }) => (
+            <Ionicons
+              name="newspaper-outline"
+              size={size}
+              color="#4284f5" />
+          ),
+        }} />
+    </Drawer.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <NavigationDrawer />
+
+    </NavigationContainer>
+
+  );
+}
+

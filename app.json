@@ -1,5 +1,6 @@
 {
   "expo": {
+  
     "name": "testReactApp",
     "slug": "testReactApp",
     "version": "1.0.0",
@@ -7,9 +8,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./component/image/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00bf63"
     },
     "assetBundlePatterns": [
       "**/*"
