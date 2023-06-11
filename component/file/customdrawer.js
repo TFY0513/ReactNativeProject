@@ -12,6 +12,7 @@ import {
     Switch
 } from 'react-native-paper';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
@@ -27,7 +28,7 @@ export default function CustomDrawer(props) {
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                        <View style={{ flexDirection: 'row', marginTop: 15, }}>
                             <Avatar.Image
                                 source={{
                                     url: require('../profile/profile.png')
@@ -94,6 +95,18 @@ export default function CustomDrawer(props) {
                             label="Job"
                             onPress={() => { props.navigation.navigate('Job') }}
                         />
+                        <DrawerItem
+
+                            icon={({ color, size }) => (
+                                <FontAwesome
+                                    name="sign-in"
+                                    size={size}
+                                    color='#4284f5'
+                                />
+                            )}
+                            label="Register"
+                            onPress={() => { props.navigation.navigate('Register') }}
+                        />
 
 
                     </View>
@@ -147,11 +160,14 @@ export default function CustomDrawer(props) {
 }
 
 const styles = StyleSheet.create({
+
     drawerContent: {
         flex: 1,
     },
     userInfoSection: {
         paddingLeft: 20,
+        backgroundColor: '#e4daf2',
+        paddingBottom: 15,
     },
     title: {
         fontsize: 16,
@@ -177,8 +193,8 @@ const styles = StyleSheet.create({
         marginRight: 3,
     },
     drawerSection: {
-    
-        marginTop: 15,
+
+        // marginTop: 15,
         borderTopWidth: 1,
         borderTopColor: '#f4f4f4',
     },
@@ -186,17 +202,17 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderTopColor: '#f4f4f4',
         borderTopWidth: 1,
-     
+
     },
     preference: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-     
+
         paddingHorizontal: 16,
         marginLeft: 12,
-       
+
     },
-  
+
     preferTitle: {
         marginTop: 10,
         marginLeft: 12,

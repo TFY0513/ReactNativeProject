@@ -10,6 +10,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './component/file/home';
 import About from './component/file/about';
 import Job from './component/file/job';
+import Register from './component/file/registration';
 import CustomDrawer from './component/file/customdrawer';
 
 const Drawer = createDrawerNavigator();
@@ -45,6 +46,16 @@ function NavigationDrawer() {
       <Drawer.Screen name="Job" component={Job}
         options={{
           title: 'Job',
+          drawerIcon: ({ size }) => (
+            <Ionicons
+              name="newspaper-outline"
+              size={size}
+              color="#4284f5" />
+          ),
+        }} />
+        <Drawer.Screen name="Register" component={Register}
+        options={{
+          title: 'Register',
           drawerIcon: ({ size }) => (
             <Ionicons
               name="newspaper-outline"
