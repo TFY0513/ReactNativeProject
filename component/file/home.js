@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button, ScrollView, Image, Dimensions } from 'react-native';
 
 import Slideshow from 'react-native-image-slider-show';
 import Card from './card';
 
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import { firebaseConfig } from '../../firebase/config'; // Import your Firebase config
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+
 const dimensions = Dimensions.get('window');
 const imageHeight = Math.round(dimensions.width * 9 / 16);
 const imageWidth = dimensions.width;
+
 
 export default function Home({ navigation }) {
     const navigateAbout = () => {
@@ -42,6 +51,30 @@ export default function Home({ navigation }) {
 
         ]
     )
+    const [data, setData] = useState({});
+
+
+    useEffect(() => {
+        const jobRef = ref(database, 'Job');
+        onValue(jobRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const postdata = snapshot.val();
+                setData(postdata);
+                console.log(postdata);
+            }
+        });
+        // Clean up the listener when the component unmounts
+        return () => jobRef.off();
+    }, []);
+    // database.ref('/Job').then((snapshot) => {
+    //     const postdata = snapshot.val();
+    //     console.log(postdata);
+    //     // snapshot.forEach((jobSnapshot) => {
+    //     //     const postdata = jobSnapshot.val();
+    //     //     console.log(jobSnapshot.val())
+    //     //     setData(postdata);
+    //     // });
+    // })
 
     return (
 
@@ -55,19 +88,14 @@ export default function Home({ navigation }) {
             </View>
             <ScrollView>
                 <View >
-                    <Card> 
-                  
-                    </Card>
-                    <Card>
-                        <Text>23231</Text>
-                    </Card>
-                    <Card>
-                        <Text>sss</Text>
-                    </Card>
-                    <Card>
-                        <Text>23231</Text>
-                    </Card>
-                  
+                    {data && typeof data === 'object' && Object.keys(data).map((key) => (
+                        <Card>
+                            <Text key={key}>
+                                {data[key]}
+                            </Text>
+                        </Card>
+                    ))}
+
                 </View>
             </ScrollView>
 
@@ -77,7 +105,7 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  
+
     item: {
         marginTop: 30,
         padding: 30,

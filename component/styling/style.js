@@ -5,6 +5,13 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
+    systemName: {
+       fontSize: 30,
+       textAlign:'center',
+       fontWeight:'bold',
+       marginTop:15,
+
+    },
     title: {
 
     },
