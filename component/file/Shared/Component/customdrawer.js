@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
@@ -15,9 +15,78 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { firebaseConfig } from '../../../../firebase/config'; // Import your Firebase config
+import { getDatabase, ref, get } from 'firebase/database';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+// Define a state variable to store the user's information
+
+
 
 export default function CustomDrawer(props) {
     const [isDarkTheme, setDarkTheme] = React.useState(false);
+    const [user, setUser] = useState({
+        username: null,
+        email: null,
+    });
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
+            if (userAuth) {
+                try {
+                    // Assuming you have a reference to Realtime Database's database
+                    const userRef = ref(database, `User/${userAuth.uid}`);
+                    get(userRef).then((snapshot) => {
+                        if (snapshot.exists()) {
+                            const userDetailData = snapshot.val();
+                            const userData = {
+                                username: userDetailData.Username, // Replace with the actual username
+                                email: userAuth.uid, // Retrieve the user's email from authentication
+                            };
+                            setUser(userData);
+                        }
+                        else {
+                            const userData = {
+                                username: "Guest",
+                                email: "123445678"
+                            };
+                            setUser(userData);
+
+                        }
+                    })
+
+                    // if (userSnapshot.exists()) {
+                    //     console.log("got data");
+                    //     // User data found in Realtime Database
+                    //     const userData = userSnapshot.val();
+
+                    //     setUser(userData);
+                    // }
+                    // else {
+                    //     console.log("no data");
+
+                    // }
+
+
+                } catch (error) {
+                    console.error('Error fetching user data from Realtime Database:', error);
+                }
+
+                //console.log("logged id : " + userAuth.uid);
+            }
+            else {
+
+            }
+
+
+
+        });
+
+    }, []);
+
 
     const toggleTheme = () => {
         setDarkTheme(!isDarkTheme);
@@ -30,10 +99,7 @@ export default function CustomDrawer(props) {
                     <View style={styles.userInfoSection}>
                         <View style={{ flexDirection: 'row', marginTop: 15, }}>
                             <Avatar.Image
-                                source={{
-                                    url: require('../profile/profile.png')
-
-                                }}
+                                source={require('../../../profile/profile.png')}
                                 size={50}
 
                             />

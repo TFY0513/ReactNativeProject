@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button, ScrollView, Image, Dimensions } from 'react-native';
 
 import Slideshow from 'react-native-image-slider-show';
-import Card from './card';
+import Card from '../Component/card';
 
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { firebaseConfig } from '../../firebase/config'; // Import your Firebase config
+import { firebaseConfig } from '../../../../firebase/config'; // Import your Firebase config
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -22,9 +22,9 @@ export default function Home({ navigation }) {
         navigation.navigate('About');
     };
     const [images, setImage] = useState([
-        { path: require('../image/job1.png'), alt: "Banner 1" },
-        { path: require('../image/job2.png'), alt: "Banner 1" },
-        { path: require('../image/job3.png'), alt: "Banner 1" },
+        { path: require('../../../image/job1.png'), alt: "Banner 1" },
+        { path: require('../../../image/job2.png'), alt: "Banner 1" },
+        { path: require('../../../image/job3.png'), alt: "Banner 1" },
 
 
     ]);
@@ -34,17 +34,17 @@ export default function Home({ navigation }) {
 
         [
             {
-                url: require('../image/job1.png'),
+                url: require('../../../image/job1.png'),
                 // title: 'Banner 1',
                 // caption: 'Caption 1',
             },
             {
-                url: require('../image/job2.png'),
+                url: require('../../../image/job2.png'),
                 // title: 'Banner 2',
                 // caption: 'Caption 1',
             },
             {
-                url: require('../image/job3.png'),
+                url: require('../../../image/job3.png'),
                 // title: 'Banner 3',
                 // caption: 'Caption 1',
             }
@@ -60,8 +60,7 @@ export default function Home({ navigation }) {
             if (snapshot.exists()) {
                 const postdata = snapshot.val();
                 setData(postdata);
-                console.log(postdata);
-            }
+                }
         });
         // Clean up the listener when the component unmounts
         return () => jobRef.off();
@@ -127,6 +126,24 @@ const styles = StyleSheet.create({
         width: imageWidth,
         height: imageHeight,
 
-    }
-
+    },
+    searchSection: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    searchIcon: {
+        padding: 10,
+    },
+    input: {
+        flex: 1,
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 0,
+        backgroundColor: '#fff',
+        color: '#424242',
+    },
 })

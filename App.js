@@ -7,11 +7,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 //import CustomDrawer from './component/file/customdrawer';
-import Home from './component/file/home';
-import About from './component/file/about';
-import Job from './component/file/job';
-import Register from './component/file/registration';
-import CustomDrawer from './component/file/customdrawer';
+import Home from './component/file/Shared/Home/home';
+import About from './component/file/Shared/About/about';
+import Job from './component/file/JobSeeker/Job/job';
+import Register from './component/file/Shared/Registration/registration';
+import CustomDrawer from './component/file/Shared/Component/customdrawer';
 
 const Drawer = createDrawerNavigator();
 
